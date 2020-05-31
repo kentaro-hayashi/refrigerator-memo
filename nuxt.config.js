@@ -26,7 +26,12 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['firebaseui/dist/firebaseui.css'],
+
+  router: {
+    middleware: ['authenticate']
+  },
+
   /*
    ** Plugins to load before mounting the App
    */
@@ -81,5 +86,19 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+
+  manifest: {
+    name: '冷蔵庫',
+    title: '冷蔵庫',
+    'og:title': '冷蔵庫',
+    description: '冷蔵庫の中身をメモって買い物時に便利なアプリ',
+    'og:description': '冷蔵庫の中身をメモって買い物時に便利なアプリ',
+    lang: 'ja',
+    theme_color: '#529b58',
+    background_color: '#bde0c0',
+    display: 'standalone',
+    scope: '/',
+    start_url: '/'
   }
 }
