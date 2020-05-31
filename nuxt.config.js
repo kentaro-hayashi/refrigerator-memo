@@ -88,17 +88,22 @@ export default {
     extend(config, ctx) {}
   },
 
-  manifest: {
-    name: '冷蔵庫',
-    title: '冷蔵庫',
-    'og:title': '冷蔵庫',
-    description: '冷蔵庫の中身をメモって買い物時に便利なアプリ',
-    'og:description': '冷蔵庫の中身をメモって買い物時に便利なアプリ',
-    lang: 'ja',
-    theme_color: '#529b58',
-    background_color: '#bde0c0',
-    display: 'standalone',
-    scope: '/',
-    start_url: '/'
+  pwa: {
+    manifest: {
+      name: '冷蔵庫',
+      title: '冷蔵庫',
+      'og:title': '冷蔵庫',
+      description: '冷蔵庫の中身をメモって買い物時に便利なアプリ',
+      'og:description': '冷蔵庫の中身をメモって買い物時に便利なアプリ',
+      lang: 'ja',
+      theme_color: '#529b58',
+      background_color: '#bde0c0',
+      display: 'standalone',
+      scope: '/',
+      start_url: '/'
+    },
+    workbox: {
+      dev: process.env.NODE_ENV !== 'production'
+    }
   }
 }
