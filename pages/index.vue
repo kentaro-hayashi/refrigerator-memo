@@ -16,9 +16,14 @@
               v-list-item(
                 v-for="(item, i) in items" 
                 :key="i"
-                to="/test"
-              ) {{item.name}} {{item.amount}}{{item.unit}}
-          v-text-field(placeholder="Placeholder")
+                :to="`/items/${item.id}`"
+              ) {{item.data.name}} {{item.data.amount}}{{item.data.unit}}
+          v-form(@submit.prevent.stop="onSubmit")
+            v-text-field(
+              label="食料追加"
+              append-icon="mdi-plus"
+              @click:append="onSubmit"
+            )
 </template>
 
 <script>
@@ -33,7 +38,7 @@ export default {
     }
   },
   methods: {
-    onclick() {
+    onSubmit() {
       console.log('test')
     }
   }
