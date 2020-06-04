@@ -17,7 +17,7 @@
                 v-for="(item, i) in items" 
                 :key="i"
                 :to="`/items/${item.id}`"
-              ) {{item.data.name}} {{item.data.amount}}{{item.data.unit}}
+              ) {{item.name}} {{item.amount}}{{item.unit}}
           v-form(@submit.prevent.stop="onSubmit")
             v-text-field(
               label="食料追加"
@@ -39,7 +39,12 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log('test')
+      this.$store.dispatch('addItem', {
+        name: 'うんこ',
+        amount: 1,
+        unit: '本',
+        alert: 0.5
+      })
     }
   }
 }

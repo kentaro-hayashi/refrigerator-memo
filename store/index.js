@@ -1,35 +1,26 @@
-export const state = () => ({
-  items: [
-    {
-      id: 'AAA',
-      data: {
-        name: 'きゅうり',
-        amount: 20,
-        unit: '本',
-        alert: 1
-      }
-    },
-    {
-      id: 'BBB',
-      data: {
-        name: '味噌',
-        amount: 1,
-        unit: '箱',
-        alert: 0.3
-      }
-    },
-    {
-      id: 'CCC',
-      data: {
-        name: 'レモン汁',
-        amount: 1,
-        unit: '本',
-        alert: 0.3
-      }
-    }
-  ]
-})
+import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { db } from '@/plugins/firebase'
 
-export const actions = {}
+export const state = {
+  items: []
+}
 
-export const mutations = {}
+export const mutations = {
+  ...vuexfireMutations
+}
+
+export const getters = {
+  getItemById: (state) => (id) => {
+    return state.items.find((i) => i.id === id)
+  }
+}
+
+export const actions = {
+  bindFireStore: firestoreAction(({ bindFirestoreRef }) => {
+    // return the promise returned by `bindFirestoreRef`
+    return bindFirestoreRef('items', db.collection('items'))
+  }),
+  addItem(context, item) {
+    return db.collection('items').add(item)
+  }
+}

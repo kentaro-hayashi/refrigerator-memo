@@ -23,9 +23,7 @@ export default {
   },
   computed: {
     item() {
-      return this.$store.state.items.find(
-        (i) => i.id === this.$route.params.itemId
-      )
+      return this.$store.getters.getItemById(this.$route.params.itemId)
     }
   }
 }
