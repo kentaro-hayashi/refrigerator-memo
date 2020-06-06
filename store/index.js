@@ -36,14 +36,24 @@ export const actions = {
         .collection('users')
         .doc(userId)
         .collection('items')
+        .orderBy('createdAt')
     )
   }),
-  addItem({ rootState }, item) {
+  addItem({ rootState }, category) {
     return db
       .collection('users')
       .doc(rootState.auth.userId)
       .collection('items')
-      .add(item)
+      .add({
+        name: '新しい食材',
+        amount: 0,
+        unit: '個',
+        changeBy: 1,
+        threshold: 0,
+        category,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
   },
   incrementItem({ rootState }, item) {
     return db
