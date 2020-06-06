@@ -35,7 +35,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['firebase'],
+  plugins: ['plugins/firebase', 'plugins/vuetify'],
   /*
    ** Nuxt.js dev-modules
    */
