@@ -4,11 +4,11 @@
       v-col(cols="12" sm="8" md="6")
         v-card
           .title
-            v-icon local_florist
+            v-icon done
             | これは何か？
           p 冷蔵庫やキッチンに保管している食材を登録して、買い物時に何を買えばいいのか教えてくれるツールです
           .title
-            v-icon local_florist
+            v-icon done
             | 使い方は？
           p Googleの認証でサインアップし、食材を登録します。
             br
