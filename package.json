@@ -1,7 +1,7 @@
 {
-  "name": "refrigerator",
+  "name": "refrigerator_memo",
   "version": "1.0.0",
-  "description": "My good Nuxt.js project",
+  "description": "stored food list",
   "author": "Kentaro Hayashi",
   "private": true,
   "scripts": {
