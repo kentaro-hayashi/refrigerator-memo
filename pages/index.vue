@@ -10,12 +10,12 @@
               template(v-for="(items, category) in categorizedItems")
                 v-subheader {{category}}
                 v-list
-                  v-list-item(v-for="(item) in items" :key="item.id" @click.stop="openDialog(item)")
+                  v-list-item(v-for="(item) in items" :key="item.id" @click.stop="openModifyDialog(item)")
                     v-container
-                      v-row(no-gutters align="center")
-                        v-col(md="5") {{item.name}}
-                        v-col(md="4") {{item.amount}}{{item.unit}}
-                        v-col(md="3")
+                      v-row(no-gutters align="center" justify="space-between")
+                        v-col(cols="12" sm="5") {{item.name}}
+                        v-col(cols="4" sm="4") {{item.amount}}{{item.unit}}
+                        v-col(cols="5" sm="3")
                           v-btn(icon @click.stop="onAdd(item)")
                             v-icon add
                           v-btn(icon @click.stop="onRemove(item)")
@@ -26,7 +26,7 @@
                           v-btn(icon v-on="on")
                             v-icon settings
                         v-list
-                          v-list-item(@click="openDialog(item)")
+                          v-list-item(@click="openModifyDialog(item)")
                             v-list-item-title 編集
                           v-list-item(@click="deleteItem(item)")
                             v-list-item-title 削除
@@ -63,7 +63,25 @@
                       v-btn(color="accent" width="100%" @click.stop="closeDialog") キャンセル
                     v-col(md="3")
                       v-btn(color="primary" width="100%" @click.stop="modifyItem") 更新
-            v-tab-item(key='buylist') test
+            v-tab-item(key='buylist')
+              v-list
+                v-list-item(v-for="(item) in shoppingList" :key="item.id" @click.stop="openShoppingDialog(item)")
+                  v-container
+                    v-row(no-gutters align="center")
+                      v-col(md="5") {{item.name}}
+                      v-col(md="4") 残り：{{item.amount}}{{item.unit}}
+            v-dialog(v-model="shoppingDialog" max-width="600px")
+              v-card
+                v-container
+                  v-row
+                    v-col
+                      v-text-field(label="購入後の数量" v-model="targetItem.amount" type="number")
+                  v-row(justify="center")
+                    v-col(md="3")
+                      v-btn(color="accent" width="100%" @click.stop="closeDialog") キャンセル
+                    v-col(md="3")
+                      v-btn(color="primary" width="100%" @click.stop="modifyItem") 購入
+
 </template>
 
 <script>
@@ -73,6 +91,7 @@ export default {
   data() {
     return {
       modifyDialog: false,
+      shoppingDialog: false,
       targetItem: {
         id: '',
         name: '',
@@ -85,7 +104,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['categorizedItems'])
+    ...mapGetters(['categorizedItems', 'shoppingList'])
   },
   methods: {
     onAdd(item) {
@@ -97,12 +116,17 @@ export default {
     newItem(category) {
       this.$store.dispatch('addItem', category)
     },
-    openDialog(item) {
+    openModifyDialog(item) {
       this.modifyDialog = true
+      this.targetItem = Object.assign({ id: item.id }, item)
+    },
+    openShoppingDialog(item) {
+      this.shoppingDialog = true
       this.targetItem = Object.assign({ id: item.id }, item)
     },
     closeDialog() {
       this.modifyDialog = false
+      this.shoppingDialog = false
     },
     deleteItem(item) {
       confirm('削除しますか？') && this.$store.dispatch('deleteItem', item)
@@ -110,6 +134,7 @@ export default {
     modifyItem() {
       this.$store.dispatch('modifyItem', this.targetItem)
       this.modifyDialog = false
+      this.shoppingDialog = false
     }
   }
 }
