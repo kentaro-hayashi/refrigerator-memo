@@ -2,9 +2,9 @@ import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import firebase from 'firebase/app'
 import { db } from '@/plugins/firebase'
 
-export const state = {
+export const state = () => ({
   items: []
-}
+})
 
 export const mutations = {
   ...vuexfireMutations
@@ -74,6 +74,31 @@ export const actions = {
       .doc(item.id)
       .update({
         amount: firebase.firestore.FieldValue.increment(-item.changeBy),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+  },
+  deleteItem({ rootState }, item) {
+    return db
+      .collection('users')
+      .doc(rootState.auth.userId)
+      .collection('items')
+      .doc(item.id)
+      .delete()
+  },
+  modifyItem({ rootState }, item) {
+    const { id, name, amount, unit, changeBy, threshold, category } = item
+    return db
+      .collection('users')
+      .doc(rootState.auth.userId)
+      .collection('items')
+      .doc(id)
+      .update({
+        name,
+        amount: Number(amount),
+        unit,
+        changeBy: Number(changeBy),
+        threshold: Number(threshold),
+        category,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       })
   }

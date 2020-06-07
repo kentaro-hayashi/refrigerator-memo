@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container
     v-row(no-gutters justify="center")
-      v-col(xs="12" sm="8" md="6")
+      v-col(cols="12" sm="8" md="6")
         v-card
           v-tabs
             v-tab(key='mgmt') 食品管理
@@ -21,32 +21,48 @@
                           v-btn(icon @click.stop="onRemove(item)")
                             v-icon remove
                     v-list-item-action
-                      v-btn(icon)
-                        v-icon settings
+                      v-menu(offset-y close-on-click=true)
+                        template(v-slot:activator="{ on }")
+                          v-btn(icon v-on="on")
+                            v-icon settings
+                        v-list
+                          v-list-item(@click="openDialog(item)")
+                            v-list-item-title 編集
+                          v-list-item(@click="deleteItem(item)")
+                            v-list-item-title 削除
                   v-list-item(@click="newItem(category)")
                     v-container
-                      v-row(no-gutters align="center")
-                        v-col 新しい項目を追加
+                      v-row(no-gutters align="center" justify="start")
+                        v-col(cols="1")
+                          v-btn(icon)
+                            v-icon add
+                        v-col(cols="11") 新しい項目を追加
             v-dialog(v-model="modifyDialog" max-width="600px")
               v-card
                 v-container
                   v-row
                     v-col
-                      v-text-field(label="名称" :value="targetItem.name")
+                      v-text-field(label="名称" v-model="targetItem.name")
                   v-row
                     v-col
-                      v-text-field(label="数え方" :value="targetItem.unit")
+                      v-text-field(label="数量" v-model="targetItem.amount" type="number")
                   v-row
                     v-col
-                      v-text-field(label="増減単位" :value="targetItem.changeBy")
+                      v-text-field(label="数え方" v-model="targetItem.unit")
                   v-row
                     v-col
-                      v-text-field(label="購入閾値" :value="targetItem.threshold")
+                      v-text-field(label="増減単位" v-model="targetItem.changeBy" type="number")
+                  v-row
+                    v-col
+                      v-text-field(label="購入閾値" v-model="targetItem.threshold" type="number")
+                  v-row
+                    v-col
+                      v-text-field(label="カテゴリ" v-model="targetItem.category")
                   v-row(justify="center")
-                    v-col(cols="2")
-                      v-btn 削除
-                    v-col(cols="2")
-                      v-btn 更新
+                    v-col(md="3")
+                      v-btn(color="accent" width="100%" @click.stop="closeDialog") キャンセル
+                    v-col(md="3")
+                      v-btn(color="primary" width="100%" @click.stop="modifyItem") 更新
             v-tab-item(key='buylist') test
 </template>
 
@@ -57,7 +73,15 @@ export default {
   data() {
     return {
       modifyDialog: false,
-      targetItem: {}
+      targetItem: {
+        id: '',
+        name: '',
+        amount: 0,
+        unit: '',
+        changeBy: 0,
+        threshold: 0,
+        category: ''
+      }
     }
   },
   computed: {
@@ -75,8 +99,25 @@ export default {
     },
     openDialog(item) {
       this.modifyDialog = true
-      this.targetItem = item
+      this.targetItem = Object.assign({ id: item.id }, item)
+    },
+    closeDialog() {
+      this.modifyDialog = false
+    },
+    deleteItem(item) {
+      confirm('削除しますか？') && this.$store.dispatch('deleteItem', item)
+    },
+    modifyItem() {
+      this.$store.dispatch('modifyItem', this.targetItem)
+      this.modifyDialog = false
     }
   }
 }
 </script>
+
+<style>
+.v-subheader {
+  font-size: 20px;
+  color: rgb(255, 255, 255) !important;
+}
+</style>
