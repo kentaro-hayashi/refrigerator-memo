@@ -10,9 +10,6 @@
     <v-content>
       <nuxt />
     </v-content>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; Kentaro Hayashi {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
