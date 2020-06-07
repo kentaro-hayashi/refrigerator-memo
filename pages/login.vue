@@ -13,6 +13,12 @@
           p Googleの認証でサインアップし、食材を登録します。
             br
             | 食材の在庫が一定の分量を下回った場合に買い物リストに載るようになっています。
+          .title
+            v-icon done
+            | ソースコードは？
+          p 以下のリポジトリで公開しています。
+            br
+            a(href="https://github.com/kentaro-hayashi/refrigerator-memo") https://github.com/kentaro-hayashi/refrigerator-memo
           firebase-auth
 </template>
 
