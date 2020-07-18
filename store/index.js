@@ -25,6 +25,9 @@ export const getters = {
     })
     return categorized
   },
+  itemExist(state) {
+    return state.items.length !== 0
+  },
   shoppingList(state) {
     return state.items.filter((item) => item.amount <= item.threshold)
   }
