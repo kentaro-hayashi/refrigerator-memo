@@ -18,7 +18,7 @@
     "firebase": "^7.14.6",
     "firebaseui": "^4.5.0",
     "nuxt": "^2.12.2",
-    "pug": "2.0.4",
+    "pug": "3.0.1",
     "pug-plain-loader": "^1.0.0",
     "vuexfire": "^3.2.2",
     "webpack": "4.43.0"
