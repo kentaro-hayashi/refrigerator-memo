@@ -15,7 +15,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/vuetify": "^1.11.2",
     "core-js": "2.6.11",
-    "firebase": "^7.14.6",
+    "firebase": "^10.9.0",
     "firebaseui": "^4.5.0",
     "nuxt": "^2.12.2",
     "pug": "3.0.1",
